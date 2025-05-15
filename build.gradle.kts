@@ -1,9 +1,12 @@
+import org.gradle.api.tasks.Delete
+import org.gradle.external.javadoc.CoreJavadocOptions
+
 buildscript {
-    val kotlinVersion = meow.AppConfig.Versions.KOTLIN
+    val kotlinVersion = "1.4.20"
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -13,18 +16,18 @@ buildscript {
 }
 
 allprojects {
-
-    tasks.withType(Javadoc::class) {
+    tasks.withType<Javadoc> {
         (options as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
         options.encoding = "UTF-8"
     }
+
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
-    delete(File("buildSrc\\build"))
+    delete(File("buildSrc/build"))
 }
